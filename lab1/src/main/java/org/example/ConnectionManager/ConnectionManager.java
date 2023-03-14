@@ -5,6 +5,7 @@ import org.example.PropertiesUtil.PropertiesUtil;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public final class ConnectionManager {
     private static final String PASSWORD_KEY = "password";
@@ -16,13 +17,7 @@ public final class ConnectionManager {
 
     }
 
-    //    private static void loadDriver(){
-//        try {
-//            Class.forName("java.sql.Driver");
-//        } catch (ClassNotFoundException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
+
     public static Connection openConnection() throws SQLException {
         try {
             Class.forName("java.sql.Driver");
@@ -38,6 +33,8 @@ public final class ConnectionManager {
         return conn;
 
     }
+
+
 //    public void close(){
 //        try {
 //            conn.close();

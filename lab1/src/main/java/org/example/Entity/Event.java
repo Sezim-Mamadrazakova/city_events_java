@@ -1,13 +1,13 @@
 package org.example.Entity;
 
-import java.time.LocalDateTime;
+import java.sql.Date;
 
 public class Event {
     private long idEvent;
     private String eventName;
     private String eventPlace;
-    private LocalDateTime dateStart;
-    private int duration;
+    private Date dateStart;
+    private String duration;
     private int idUser;
 
     public Event() {
@@ -17,8 +17,15 @@ public class Event {
         return idEvent;
     }
 
+    public void setIdEvent(long idEvent) {
+        this.idEvent = idEvent;
+    }
+
     public void setEventPlace(String eventPlace) {
         this.eventPlace = eventPlace;
+    }
+    public String  getEventPlace(){
+        return eventPlace;
     }
 
     public String getEventName() {
@@ -29,19 +36,20 @@ public class Event {
         this.eventName = eventName;
     }
 
-    public LocalDateTime getDateStart() {
+    public Date getDateStart() {
         return dateStart;
     }
 
-    public void setDateStart(LocalDateTime dateStart) {
+    public void setDateStart(Date dateStart) {
         this.dateStart = dateStart;
+
     }
 
-    public int getDuration() {
+    public String getDuration() {
         return duration;
     }
 
-    public void setDuration(int duration) {
+    public void setDuration(String duration) {
         this.duration = duration;
     }
 

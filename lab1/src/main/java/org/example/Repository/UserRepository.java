@@ -98,7 +98,7 @@ public class UserRepository implements UserDao {
 
         try {
             connection = ConnectionManager.openConnection();
-            statement = connection.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
+            statement = connection.prepareStatement(INSERT);
             statement.setLong(1, user.getIdUser());
             statement.setString(2, user.getFullName());
             statement.setString(3, user.getEmail());
@@ -118,7 +118,7 @@ public class UserRepository implements UserDao {
         }
     }
 
-    private static void close(Connection con) {
+    public static void close(Connection con) {
         if (con != null) {
             try {
                 con.close();
@@ -129,7 +129,7 @@ public class UserRepository implements UserDao {
         }
     }
 
-    private static void close(Statement stmt) {
+    public static void close(Statement stmt) {
         if (stmt != null) {
             try {
                 stmt.close();
