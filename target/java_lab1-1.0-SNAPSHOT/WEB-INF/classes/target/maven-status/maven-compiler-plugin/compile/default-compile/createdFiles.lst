@@ -1,0 +1,14 @@
+org\example\DaoImpl\EventDaoImpl.class
+org\example\Dao\UserDao.class
+org\example\Entity\Favorites.class
+org\example\ConnectionManager\ConnectionManager.class
+org\example\Entity\User.class
+org\example\Entity\Event.class
+org\example\DaoImpl\FavoriteDaoImpl.class
+org\example\Entity\City.class
+org\example\Main.class
+org\example\Dao\EventDao.class
+org\example\DaoImpl\UserDaoImpl.class
+org\example\Servlet\TestServlet.class
+org\example\Dao\FavoriteDao.class
+org\example\PropertiesUtil\PropertiesUtil.class
