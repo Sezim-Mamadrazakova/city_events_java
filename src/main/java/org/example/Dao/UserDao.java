@@ -1,7 +1,4 @@
 package org.example.Dao;
-
-
-
 import org.example.Entity.User;
 
 import java.sql.SQLException;
@@ -14,5 +11,7 @@ public interface UserDao {
     public void delete(long id);
 
     public void insert(User user);
+
+    public User getByName(String fullName);
 
 }

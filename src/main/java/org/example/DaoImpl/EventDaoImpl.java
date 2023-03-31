@@ -17,6 +17,7 @@ public class EventDaoImpl implements EventDao {
             " WHERE idEvent=?";
 
     private static final String GET = "SELECT idevent, eventname, eventplace,datestart, duration,iduserfk FROM Events WHERE idEvent=?";
+    private static final String GET_BY_NAME="SELECT idevent, eventname, eventplace,datestart, duration,iduserfk FROM Events WHERE eventname=?";
     @Override
     public Event get(long idEvent) throws SQLException {
 
@@ -81,8 +82,6 @@ public class EventDaoImpl implements EventDao {
 
     }
 
-
-
     @Override
     public void delete(long idEvent) {
 
@@ -95,5 +94,31 @@ public class EventDaoImpl implements EventDao {
             throw new RuntimeException(e);
         }
 
+    }
+
+    @Override
+    public Event getByEventName(String eventName) {
+        try(Connection connection= ConnectionManager.openConnection();){
+            PreparedStatement statement=connection.prepareStatement(GET_BY_NAME);
+            statement.setString(1,eventName);
+            ResultSet resultSet=statement.executeQuery();
+            if (resultSet.next()){
+                Event event=new Event();
+                event.setIdEvent(resultSet.getInt("idEvent"));
+                event.setEventName(resultSet.getString("eventName"));
+                event.setEventPlace(resultSet.getString("eventPlace"));
+                event.setDateStart(resultSet.getTimestamp("dateStart"));
+                event.setDuration(resultSet.getString("duration"));
+                event.setIdUser(resultSet.getInt("idUserFK"));
+                return event;
+
+            }
+            else {
+                return null;
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

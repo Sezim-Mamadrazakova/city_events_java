@@ -14,6 +14,7 @@ public class Main {
         user.setPassword("passqord");
         user.setCity(City.Samara);
         //userRepository.insert(user);
-        userRepository.delete(10);
+        //userRepository.delete(9);
+        userRepository.update(user);
     }
 }

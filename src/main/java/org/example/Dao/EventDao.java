@@ -11,4 +11,5 @@ public interface EventDao {
     public void insert(Event event) throws SQLException;
     public void update(Event event);
     public void delete(long idEvent);
+    public Event getByEventName(String eventName);
 }
