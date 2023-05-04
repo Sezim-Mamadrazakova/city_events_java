@@ -4,21 +4,29 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 public class Event {
-    private long idEvent;
+    private Long idEvent;
     private String eventName;
     private String eventPlace;
     private Timestamp dateStart;
     private String duration;
-    private long idUser;
+    //private long idUser;
 
     public Event() {
     }
+    public Event(Long idEvent, String eventName, String eventPlace, Timestamp dateStart, String duration){
+        this.idEvent=idEvent;
+        this.eventName=eventName;
+        this.eventPlace=eventPlace;
+        this.dateStart=dateStart;
+        this.duration=duration;
 
-    public long getIdEvent() {
+    }
+
+    public Long getIdEvent() {
         return idEvent;
     }
 
-    public void setIdEvent(long idEvent) {
+    public void setIdEvent(Long idEvent) {
         this.idEvent = idEvent;
     }
 
@@ -54,13 +62,13 @@ public class Event {
         this.duration = duration;
     }
 
-    public long getIdUser() {
-        return idUser;
-    }
-
-    public void setIdUser(long idUser) {
-        this.idUser = idUser;
-    }
+//    public long getIdUser() {
+//        return idUser;
+//    }
+//
+//    public void setIdUser(long idUser) {
+//        this.idUser = idUser;
+//    }
 
     @Override
     public String toString() {

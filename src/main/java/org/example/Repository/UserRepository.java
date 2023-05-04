@@ -1,14 +1,17 @@
-package org.example.DaoImpl;
+package org.example.Repository;
 
 
-import org.example.ConnectionManager.ConnectionManager;
-import org.example.Dao.UserDao;
+import org.example.ConnectionFactory.ConnectionBuilder;
 import org.example.Entity.City;
 import org.example.Entity.User;
 
 import java.sql.*;
 
-public class UserDaoImpl implements UserDao {
+public class UserRepository {
+    private final Connection connection;
+    public UserRepository(ConnectionBuilder connection)  {
+        this.connection = connection.getConnection();
+    }
     private static final String INSERT = "INSERT INTO Users(fullName, email, password, city) " +
             "VALUES(?, ?, ?, ?)";
     private static final String DELETE = "DELETE FROM users WHERE idUser=?";
@@ -16,18 +19,17 @@ public class UserDaoImpl implements UserDao {
 
     private static final String GET = "SELECT iduser, fullname, email, password, city FROM users WHERE idUser=?";
     private static final String GET_BY_NAME="SELECT idUser,fullname, email, password, city FROM users WHERE fullName=?";
+    private static final String GET_BY_EMAIL="SELECT idUser, fullName, email, password, city FROM users WHERE email=?";
 
-    @Override
-    public User get(long idUser) throws SQLException {
+    public User get(Long idUser) throws SQLException {
 
-        try {
-            try (Connection connection = ConnectionManager.openConnection()) {
+            try  {
                 PreparedStatement statement = connection.prepareStatement(GET);
                 statement.setLong(1, idUser);
                 ResultSet resultSet = statement.executeQuery();
                 if (resultSet.next()) {
                     User user = new User();
-                    user.setIdUser(resultSet.getInt("idUser"));
+                    user.setIdUser(resultSet.getLong("idUser"));
                     user.setFullName(resultSet.getString("fullName"));
                     user.setEmail(resultSet.getString("email"));
                     user.setPassword(resultSet.getString("password"));
@@ -38,17 +40,15 @@ public class UserDaoImpl implements UserDao {
                 else{
                     return null;
                 }
+            }catch (SQLException e) {
+                throw new RuntimeException(e);
             }
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
     }
 
-    @Override
+
     public void update(User user)  {
 
-        try(Connection connection = ConnectionManager.openConnection();) {
+        try {
             PreparedStatement statement = connection.prepareStatement(UPDATE);
             statement.setString(1, user.getFullName());
             statement.setString(2, user.getEmail());
@@ -62,12 +62,9 @@ public class UserDaoImpl implements UserDao {
         }
     }
 
-    @Override
-    public void delete(long id) {
+    public void delete(Long id) {
 
-
-        try(Connection connection = ConnectionManager.openConnection()) {
-
+        try {
             PreparedStatement statement = connection.prepareStatement(DELETE);
             statement.setLong(1, id);
             statement.executeUpdate();
@@ -77,33 +74,54 @@ public class UserDaoImpl implements UserDao {
         }
     }
 
-    @Override
-    public void insert(User user) {
-
-
-        try(Connection connection = ConnectionManager.openConnection()) {
-
-            PreparedStatement statement = connection.prepareStatement(INSERT);
+    public User insert(User user) {
+        try {
+            PreparedStatement statement = connection.prepareStatement(INSERT, new String[]{"iduser"});
             statement.setString(1, user.getFullName());
             statement.setString(2, user.getEmail());
             statement.setString(3, user.getPassword());
             statement.setString(4, user.getCity().toString());
             statement.executeUpdate();
+            var generetedKey=statement.getGeneratedKeys();
+            generetedKey.next();
+            user.setIdUser(generetedKey.getLong("idUser"));
+            return user;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public User getByName(String fullName) {
+        try {
+            PreparedStatement statement = connection.prepareStatement(GET_BY_NAME);
+            statement.setString(1,fullName);
+            ResultSet resultSet= statement.executeQuery();
+            if (resultSet.next()){
+                User user= new User();
+                user.setIdUser(resultSet.getLong("idUser"));
+                user.setFullName(resultSet.getString("fullName"));
+                user.setEmail(resultSet.getString("email"));
+                user.setPassword(resultSet.getString("password"));
+                user.setCity(City.valueOf(resultSet.getString("city")));
+                return user;
+            }
+            else {
+                return null;
+            }
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    @Override
-    public User getByName(String fullName) {
-        try(Connection connection = ConnectionManager.openConnection()) {
-            PreparedStatement statement = connection.prepareStatement(GET_BY_NAME);
-            statement.setString(1,fullName);
+    public User getByEmail(String email) {
+        try {
+            PreparedStatement statement = connection.prepareStatement(GET_BY_EMAIL);
+            statement.setString(1,email);
             ResultSet resultSet= statement.executeQuery();
             if (resultSet.next()){
                 User user= new User();
-                user.setIdUser(resultSet.getInt("idUser"));
+                user.setIdUser(resultSet.getLong("idUser"));
                 user.setFullName(resultSet.getString("fullName"));
                 user.setEmail(resultSet.getString("email"));
                 user.setPassword(resultSet.getString("password"));

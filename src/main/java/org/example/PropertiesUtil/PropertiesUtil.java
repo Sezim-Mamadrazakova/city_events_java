@@ -3,7 +3,7 @@ package org.example.PropertiesUtil;
 import java.io.IOException;
 import java.util.Properties;
 
-public final class PropertiesUtil {
+public class PropertiesUtil {
     private static final Properties PROPERTIES = new Properties();
 
     private PropertiesUtil() {
@@ -29,6 +29,4 @@ public final class PropertiesUtil {
         }
 
     }
-
-
 }

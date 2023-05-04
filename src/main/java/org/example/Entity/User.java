@@ -3,21 +3,20 @@ package org.example.Entity;
 import java.util.Objects;
 
 public class User {
-    private long idUser;
+    private Long idUser;
     private String fullName;
     private String email;
     private String password;
     private City city;
 
     public User() {
-
     }
 
-    public long getIdUser() {
+    public Long getIdUser() {
         return idUser;
     }
 
-    public void setIdUser(long idUser) {
+    public void setIdUser(Long idUser) {
         this.idUser = idUser;
     }
 

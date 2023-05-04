@@ -1,65 +1,63 @@
 package crud;
-import org.example.DaoImpl.EventDaoImpl;
-import org.example.DaoImpl.UserDaoImpl;
 
+
+import connect.ConnectionImpl;
 import org.example.Entity.Event;
+import org.example.Repository.EventRepository;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+
 public class EventTest {
-    EventDaoImpl eventDao=new EventDaoImpl();
-    @Test
-    public void getEventTest(){
-        Event event=new Event();
-        event.setEventName("venera");
-        event.setEventPlace("Nikitinskaya 22");
-        event.setDateStart(Timestamp.valueOf("2023-04-05 18:00:00"));
-        event.setDuration("2 hour");
-        event.setIdUser(11);
-        Event e2=eventDao.getByEventName("venera");
-        assertEquals(event.getEventName(), e2.getEventName());
-    }
+    public final static Event event=new Event();
+    public final static EventRepository eventRepository=new EventRepository(new ConnectionImpl());
+    Timestamp timestamp=new Timestamp(System.currentTimeMillis());
+
     @Test
     public void insertEventTest() throws SQLException {
-        Event event=new Event();
-        event.setEventName("venera");
-        event.setEventPlace("Nikitinskaya 22");
-        event.setDateStart(Timestamp.valueOf("2023-04-05 18:00:00"));
-        event.setDuration("2 hour");
-        event.setIdUser(11);
-        eventDao.insert(event);
-        Event e2=eventDao.getByEventName("venera");
-        assertEquals(event.getEventName(), e2.getEventName());
-
-    }
-    @Test
-    public void updateEventTest() throws SQLException {
-        Event event=new Event();
-        event.setEventName("venera");
-        event.setEventPlace("Nikitinskaya 22");
-        event.setDateStart(Timestamp.valueOf("2023-04-05 18:00:00"));
-        event.setDuration("2 hour");
-        event.setIdUser(11);
-        Event e2=eventDao.getByEventName("Sun");
-        event.setIdEvent(e2.getIdEvent());
-        event.setEventName("Venera");
-        eventDao.update(event);
-        assertEquals(event.getEventName(), eventDao.getByEventName(event.getEventName()).getEventName());
+        initEvent();
+        assertEquals(event.getIdEvent(), eventRepository.get(event.getIdEvent()).getIdEvent());
     }
     @Test
     public void deleteEventTest() throws SQLException {
-        Event event=new Event();
-        event.setEventName("venera");
-        event.setEventPlace("Nikitinskaya 22");
-        event.setDateStart(Timestamp.valueOf("2023-04-05 18:00:00"));
-        event.setDuration("2 hour");
-        event.setIdUser(11);
-        event.setIdEvent(eventDao.getByEventName("Venera").getIdEvent());
-        eventDao.delete(event.getIdEvent());
-        assertEquals(null, eventDao.get(event.getIdEvent()));
+        initEvent();
+        eventRepository.delete(event.getIdEvent());
+        assertNull(eventRepository.get(event.getIdEvent()));
+    }
+    @Test
+    public void getEventTest() throws SQLException {
+        initEvent();
+        assertEquals(event.getIdEvent(), eventRepository.get(event.getIdEvent()).getIdEvent());
+    }
+    @Test
+    public void updateEventTest() throws SQLException {
+        initEvent();
+        event.setEventName("Чебурашка");
+        eventRepository.update(event);
+        assertEquals(event.getEventName(), eventRepository.get(event.getIdEvent()).getEventName());
+
+    }
+    @Test
+    public void getByEventNameTest() throws SQLException {
+        initEvent();
+        assertEquals(event.getEventName(), eventRepository.getByEventName(event.getEventName()).getEventName());
+    }
+    @Test
+    public void getAllEventTest(){
+        List<Event> events=eventRepository.getAll();
+        assertEquals(events.size(), eventRepository.getAll().size());
+    }
+    void initEvent() throws SQLException {
+        event.setEventName("Буратино");
+        event.setEventPlace("Куколкина 12");
+        event.setDateStart(timestamp);
+        event.setDuration("90 мин");
+        Event event1=eventRepository.insert(event);
+        event.setIdEvent(event1.getIdEvent());
     }
 }

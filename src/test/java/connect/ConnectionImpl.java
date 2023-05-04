@@ -1,23 +1,20 @@
-package org.example.ConnectionManager;
-import org.example.PropertiesUtil.PropertiesUtil;
+package connect;
 
+import org.example.ConnectionFactory.ConnectionBuilder;
+import org.example.PropertiesUtil.PropertiesUtil;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public final class ConnectionManager {
+public class ConnectionImpl implements ConnectionBuilder {
     private static final String PASSWORD_KEY = "password";
     private static final String USERNAME_KEY = "username";
     private static final String URL_KEY = "url";
-    //private static Connection conn = null;
 
-    private ConnectionManager() {
+    @Override
+    public Connection getConnection() {
 
-    }
-
-
-    public static Connection openConnection() throws SQLException {
         Connection conn = null;
         try {
             Class.forName("java.sql.Driver");
@@ -27,13 +24,11 @@ public final class ConnectionManager {
                     PropertiesUtil.get(PASSWORD_KEY)
 
             );
-        } catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException | SQLException e) {
             throw new RuntimeException(e);
         }
         return conn;
 
     }
-
-
 
 }
