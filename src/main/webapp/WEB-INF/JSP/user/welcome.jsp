@@ -37,7 +37,7 @@
 <body>
 <header>
     <ul>
-        <li><a href="<%=request.getContextPath()%>/list"></a></li>
+        <li><a href="/java_lab1_war_exploded/welcome?action=list"></a></li>
     </ul>
 </header>
 
@@ -64,27 +64,17 @@
                         <td style="text-align: center"><c:out value="${event.getDateStart()}"/></td>
                         <td style="text-align: center"><c:out value="${event.getDuration()}"/></td>
                         <td style="text-align: center"><a
-                                href="edit?&idEvent=<c:out value="${event.getIdEvent()}"/>">Update</a> </td>
+                                href="/java_lab1_war_exploded/welcome?action=edit&idEvent=<c:out value="${event.getIdEvent()}"/>">Update</a> </td>
                         <td style="text-align: center"><a
-                                href="delete?&idEvent=<c:out value="${event.getIdEvent()}"/>">Delete</a> </td>
+                                href="/java_lab1_war_exploded/welcome?action=delete&idEvent=<c:out value="${event.getIdEvent()}"/>">Delete</a> </td>
                     </tr>
             </c:forEach>
     </tbody>
 
 </table>
-<%--<form method="post" action="${pageContext.request.contextPath}/welcome">--%>
-<%--    Event Name : <input type="text" id="eventName" name="eventName"--%>
-<%--                        value="<c:out value="${event.getEventName()}"/>"/><br/>--%>
-<%--    Event Place : <input type="text" id="eventPlace" name="eventPlace"--%>
-<%--                         value="<c:out value="${event.getEventPlace()}" />"/> <br/>--%>
-<%--    Event date : <input type="text" id="dateStart" name="dateStart"--%>
-<%--                        value="<c:out value="${event.getDateStart()}" />"/> <br/>--%>
-<%--    Event duration : <input type="text" id="duration" name="duration"--%>
-<%--                            value="<c:out value="${event.getDuration()}" />"/> <br/>--%>
-<%--    <button type="submit" > Save</button>--%>
 
-<%--</form>--%>
 <p><a  href="<%=request.getContextPath()%>/new">Add Event</a> </p>
+<p><a href="<%=request.getContextPath()%>/search">Search</a></p>
 
 
 

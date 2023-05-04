@@ -5,20 +5,28 @@ import org.example.Dao.UserDao;
 import org.example.Entity.User;
 
 import java.sql.SQLException;
+
 import org.example.Repository.UserRepository;
 
 public class UserDaoImpl implements UserDao {
 
-    private final UserRepository userRepository=new UserRepository(new ConnectionFactory());
+    private final UserRepository userRepository = new UserRepository(new ConnectionFactory());
+
     @Override
-    public User get(Long idUser) throws SQLException {return userRepository.get(idUser);
+    public User get(Long idUser) throws SQLException {
+        return userRepository.get(idUser);
     }
+
     @Override
-    public void update(User user) throws SQLException {userRepository.update(user);
+    public void update(User user) throws SQLException {
+        userRepository.update(user);
     }
+
     @Override
-    public void delete(Long id) {userRepository.delete(id);
+    public void delete(Long id) {
+        userRepository.delete(id);
     }
+
     @Override
     public User insert(User user) {
         return userRepository.insert(user);

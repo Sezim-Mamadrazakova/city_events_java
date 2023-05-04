@@ -1,4 +1,5 @@
 package org.example.Dao;
+
 import org.example.Entity.User;
 
 import java.sql.SQLException;
@@ -13,6 +14,7 @@ public interface UserDao {
     public User insert(User user);
 
     public User getByName(String fullName);
+
     public User getByEmail(String email);
 
 }

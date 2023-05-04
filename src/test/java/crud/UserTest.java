@@ -1,64 +1,70 @@
 package crud;
 
-import org.example.DaoImpl.UserDaoImpl;
+import connect.ConnectionImpl;
 import org.example.Entity.City;
 import org.example.Entity.User;
+import org.example.Repository.UserRepository;
 import org.junit.jupiter.api.Test;
 
+
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class UserTest {
-    UserDaoImpl userDao=new UserDaoImpl();
+    public final static User user = new User();
+    public final static UserRepository userRepository = new UserRepository(new ConnectionImpl());
 
+    @Test
+    public void insertUserTest() throws SQLException {
+        initUser();
+        assertEquals(user.getIdUser(), userRepository.get(user.getIdUser()).getIdUser());
+
+    }
+
+    @Test
+    public void deleteUserTest() throws SQLException {
+        initUser();
+        userRepository.delete(user.getIdUser());
+        assertNull(userRepository.get(user.getIdUser()));
+
+    }
 
     @Test
     public void getUserTest() throws SQLException {
-        User user =new User();
-        user.setCity(City.Moscow);
-        user.setEmail("email.ru");
-        user.setPassword("123");
-        user.setFullName("laha");
-        User user2=userDao.getByName("laha");
-        assertEquals(user.getFullName(),user2.getFullName());
-    }
-    @Test
-    public void insertUserTest(){
-        User user =new User();
-        user.setCity(City.Kazan);
-        user.setEmail("qazwsx12.ru");
-        user.setPassword("password123");
-        user.setFullName("Diana");
-        userDao.insert(user);
-        User user2=userDao.getByName("Diana");
-        assertEquals(user.getFullName(),user2.getFullName());
-    }
-    @Test
-    public void updateUserTest(){
-        User user =new User();
-        user.setCity(City.Kazan);
-        user.setEmail("rain@emai.com");
-        user.setPassword("uhb123");
-        user.setFullName("Dima");
-        userDao.insert(user);
-        User user2=userDao.getByName("Dima");
-        user.setIdUser(user2.getIdUser());
-        user.setFullName("Dima Romanov");
-        userDao.update(user);
-        assertEquals(user.getFullName(), userDao.getByName(user.getFullName()).getFullName());
+        initUser();
+        assertEquals(user.getIdUser(), userRepository.get(user.getIdUser()).getIdUser());
 
     }
+
     @Test
-    public void deleteUserTest() throws SQLException {
-        User user =new User();
+    public void updateUserTest() throws SQLException {
+        initUser();
         user.setCity(City.Kazan);
-        user.setEmail("rain@emai.com");
-        user.setPassword("uhb123");
-        user.setFullName("Dima Romanov");
-        user.setIdUser(userDao.getByName("Dima Romanov").getIdUser());
-        userDao.delete(user.getIdUser());
-        assertEquals(null, userDao.get(user.getIdUser()));
+        userRepository.update(user);
+        assertEquals(user.getCity(), userRepository.get(user.getIdUser()).getCity());
     }
+
+    @Test
+    public void getByEmailUserTest() {
+        initUser();
+        assertEquals(user.getEmail(), userRepository.getByEmail(user.getEmail()).getEmail());
+
+
+    }
+
+    void initUser() {
+        user.setFullName("Maxim");
+        user.setEmail("max@gmail.com");
+        user.setPassword("qazwsx");
+        user.setCity(City.Omsk);
+        User user1 = userRepository.insert(user);
+        user.setIdUser(user1.getIdUser());
+    }
+
+
 }

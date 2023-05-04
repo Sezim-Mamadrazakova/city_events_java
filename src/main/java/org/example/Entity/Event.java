@@ -13,12 +13,13 @@ public class Event {
 
     public Event() {
     }
-    public Event(Long idEvent, String eventName, String eventPlace, Timestamp dateStart, String duration){
-        this.idEvent=idEvent;
-        this.eventName=eventName;
-        this.eventPlace=eventPlace;
-        this.dateStart=dateStart;
-        this.duration=duration;
+
+    public Event(Long idEvent, String eventName, String eventPlace, Timestamp dateStart, String duration) {
+        this.idEvent = idEvent;
+        this.eventName = eventName;
+        this.eventPlace = eventPlace;
+        this.dateStart = dateStart;
+        this.duration = duration;
 
     }
 
@@ -33,7 +34,8 @@ public class Event {
     public void setEventPlace(String eventPlace) {
         this.eventPlace = eventPlace;
     }
-    public String  getEventPlace(){
+
+    public String getEventPlace() {
         return eventPlace;
     }
 

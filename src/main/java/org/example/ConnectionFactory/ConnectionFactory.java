@@ -10,6 +10,7 @@ import java.sql.SQLException;
 public class ConnectionFactory implements ConnectionBuilder {
 
     private DataSource dataSource;
+
     public ConnectionFactory() {
         try {
             Context cxt = new InitialContext();
@@ -21,7 +22,7 @@ public class ConnectionFactory implements ConnectionBuilder {
     }
 
     @Override
-    public Connection getConnection()  {
+    public Connection getConnection() {
         Connection connection = null;
         try {
             connection = dataSource.getConnection();

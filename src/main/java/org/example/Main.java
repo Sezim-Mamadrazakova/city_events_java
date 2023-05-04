@@ -17,15 +17,5 @@ public class Main {
             System.out.println(events.get(i));
         }
 
-
-//        UserDaoImpl userRepository=new UserDaoImpl();
-//        user.setFullName("Vghjgjh drdr");
-//        user.setEmail("nful23145@mail.ru");
-//        user.setPassword("passqord");
-//        user.setCity(City.Samara);
-//        EventRepository eventDao=new EventRepository();
-//        List<Event> eventList=eventDao.getAll();
-//        System.out.println(eventList.size());
-
     }
 }

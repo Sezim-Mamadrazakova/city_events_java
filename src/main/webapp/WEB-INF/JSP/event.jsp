@@ -12,19 +12,19 @@
     <title>Title</title>
 </head>
 <body>
-<header>
-    <ul>
-        <li><a href="<%=request.getContextPath()%>/list"></a></li>
-    </ul>
-</header>
+<%--<header>--%>
+<%--    <ul>--%>
+<%--        <li><a href="<%=request.getContextPath()%>/list"></a></li>--%>
+<%--    </ul>--%>
+<%--</header>--%>
 <div>
 
 
     <c:if test="${event.getIdEvent()!=null}">
-    <form action="update" method="post">
+    <form action="/java_lab1_war_exploded/welcome?action=update&idEvent=<c:out value="${event.getIdEvent()}"/>" method="post">
         </c:if>
         <c:if test="${event.getIdEvent()==null}">
-        <form method="post" action="insert">
+        <form method="post" action="/java_lab1_war_exploded/welcome?action=insert">
             </c:if>
             <caption>
                 <c:if test="${event.getIdEvent()!=null}">

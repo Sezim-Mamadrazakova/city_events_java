@@ -14,42 +14,48 @@ public class EventService {
         this.eventDaoImpl = new EventDaoImpl();
 
     }
-    public Event insert(Event event){
-        try{
+
+    public Event insert(Event event) {
+        try {
             return eventDaoImpl.insert(event);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
-    public void delete(Long idEvent){
-        try{
+
+    public void delete(Long idEvent) {
+        try {
             eventDaoImpl.delete(idEvent);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
-    public void update(Event event){
-        try{
+
+    public void update(Event event) {
+        try {
             eventDaoImpl.update(event);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
-    public Event get(Long id){
-        try{
+
+    public Event get(Long id) {
+        try {
             return eventDaoImpl.get(id);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
-    public Event getByName(String name){
-        try{
+
+    public Event getByName(String name) {
+        try {
             return eventDaoImpl.getByEventName(name);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
-    public List<Event> getAll(){
+
+    public List<Event> getAll() {
         try {
             return eventDaoImpl.getAll();
         } catch (Exception e) {

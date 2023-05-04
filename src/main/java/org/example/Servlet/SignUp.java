@@ -11,43 +11,45 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet("/signup")
+@WebServlet("/")
 public class SignUp extends HttpServlet {
-    private final UserService userService=new UserService(new UserDaoImpl());
+    private final UserService userService = new UserService(new UserDaoImpl());
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher requestDispatcher=req.getRequestDispatcher("WEB-INF/JSP/user/signup.jsp");
-//        List<String> city=getCity();
-//        req.setAttribute("city",city );
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("WEB-INF/JSP/user/signup.jsp");
         requestDispatcher.forward(req, resp);
     }
-    private List<String> getCity(){
-        return List.of("Moscow", "Voronezh", "Kazan","Omsk","Samara","Perm");
+
+    private List<String> getCity() {
+        return List.of("Moscow", "Voronezh", "Kazan", "Omsk", "Samara", "Perm");
     }
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String email=req.getParameter("email");
-        String password=req.getParameter("password");
-        String fullName=req.getParameter("fullName");
-        String city=req.getParameter("city");
-        User user=new User();
+        String email = req.getParameter("email");
+        String password = req.getParameter("password");
+        String fullName = req.getParameter("fullName");
+        String city = req.getParameter("city");
+        User user = new User();
         user.setEmail(email);
         user.setFullName(fullName);
         user.setPassword(password);
         user.setCity(City.valueOf(city));
-        Long created=userService.createUser(user);
-        boolean save=false;
-        if(created!=null){
-            save=true;
+        Long created = userService.createUser(user);
+        boolean save = false;
+        if (created != null) {
+            save = true;
         }
         req.setAttribute("userCreated", save);
-        RequestDispatcher requestDispatcher=req.getRequestDispatcher("WEB-INF/JSP/user/login.jsp");
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("WEB-INF/JSP/user/login.jsp");
         requestDispatcher.forward(req, resp);
-        //resp.sendRedirect("user/welcome");
+
 
     }
 }

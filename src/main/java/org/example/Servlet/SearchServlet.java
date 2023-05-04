@@ -1,6 +1,5 @@
 package org.example.Servlet;
 
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -11,12 +10,16 @@ import org.example.Service.EventService;
 
 import java.io.IOException;
 
-@WebServlet("/new")
-public class EventServlet extends HttpServlet {
+@WebServlet("/search")
+
+public class SearchServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("WEB-INF/JSP/event.jsp");
-        requestDispatcher.forward(req, resp);
+        String arg = req.getParameter("arg");
+        EventService eventService = new EventService();
+        Event event = eventService.getByName(arg);
+        req.setAttribute("event", event);
+        req.getRequestDispatcher("/WEB-INF/JSP/search_view.jsp").forward(req, resp);
     }
 
     @Override
